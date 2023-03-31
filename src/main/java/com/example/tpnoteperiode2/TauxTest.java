@@ -1,0 +1,44 @@
+package com.example.tpnoteperiode2;
+
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+public class TauxTest {
+
+    @Test
+    public void testGetSeuilInf() {
+        Taux taux = new Taux(0, 500, 0.01, "Taux1");
+        assertEquals(0, taux.getSeuilInf(), 0.001);
+    }
+
+    @Test
+    public void testGetSeuilSup() {
+        Taux taux = new Taux(0, 500, 0.01, "Taux1");
+        assertEquals(500, taux.getSeuilSup(), 0.001);
+    }
+
+    @Test
+    public void testGetTaux() {
+        Taux taux = new Taux(0, 500, 0.01, "Taux1");
+        assertEquals(0.01, taux.getTaux(), 0.001);
+    }
+
+    @Test
+    public void testGetNomTaux() {
+        Taux taux = new Taux(0, 500, 0.01, "Taux1");
+        assertEquals("Taux1", taux.getNomTaux());
+    }
+
+    @Test
+    public void testEstDansSeuilsTrue() {
+        Taux taux = new Taux(0, 500, 0.01, "Taux1");
+        assertTrue(taux.estDansSeuils(250));
+    }
+
+    @Test
+    public void testEstDansSeuilsFalse() {
+        Taux taux = new Taux(0, 500, 0.01, "Taux1");
+        assertFalse(taux.estDansSeuils(750));
+    }
+}
