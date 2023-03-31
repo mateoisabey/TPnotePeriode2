@@ -12,4 +12,28 @@ public class Transaction implements Serializable {
         this.type = type;
         this.montant = montant;
     }
+
+    public String getNom() {
+        return "";
+    }
+
+    public void setNom(String nom) {
+
+    }
+
+    public String getType() {
+        return "";
+    }
+
+    public void setType(String type) {
+
+    }
+
+    public double getMontant() {
+        return 0;
+    }
+
+    public void setMontant(double montant) {
+
+    }
 }
