@@ -48,9 +48,9 @@ public class GestionnaireBancaire {
             String[] valeurs = string.split(" ");
             double seuilInf = Double.parseDouble(valeurs[1].trim());
             double seuilSup = Double.parseDouble(valeurs[2].trim());
-            double taux = Double.parseDouble(valeurs[3].trim());
+            double valTaux = Double.parseDouble(valeurs[3].trim());
             String nomTaux = valeurs[0].trim();
-            Taux nouveauTaux = new Taux(nomTaux, seuilInf, seuilSup, taux);
+            Taux nouveauTaux = new Taux(nomTaux, seuilInf, seuilSup, valTaux);
             this.taux.add(nouveauTaux);
         }
     }
@@ -90,9 +90,6 @@ public class GestionnaireBancaire {
         return taux;
     }
 
-    public double getSolde() {
-        return solde;
-    }
 }
 
 
