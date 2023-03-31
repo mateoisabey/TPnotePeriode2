@@ -42,7 +42,7 @@ public class Controleur implements Observer {
     }
 
 
-    public void actionEnregistrer(ActionEvent evt) {
+    public void actionEnregistrer() {
         String nom = textFieldNom.getText();
         double montant = Double.parseDouble(textFieldMontant.getText());
         String type = comboBoxType.getValue();
@@ -62,6 +62,9 @@ public class Controleur implements Observer {
 
 
 
+    /**
+     * Affiche le solde du compte et change la couleur du label en fonction du solde
+     */
     private void afficherSolde() {
         double solde = gestionnaireBancaire.getSoldeCompte();
         labelSolde.setText(String.format("%.2f €", solde));

@@ -20,6 +20,10 @@ public class GestionnaireBancaire {
         solde = 0;
     }
 
+    /**
+     * Ajoute une transaction au compte et met à jour le solde
+     * @param transaction
+     */
     public void ajouterTransaction(Transaction transaction) {
         transactions.add(transaction);
         if (transaction.getType().equals("credit")) {
@@ -33,6 +37,10 @@ public class GestionnaireBancaire {
         return solde;
     }
 
+    /**
+     * Charge les taux depuis le fichier taux.txt
+     * @throws IOException
+     */
     public void chargerTaux() throws IOException {
         Path P1 = Paths.get("src/main/resources/com/example/tpnoteperiode2/Data/taux.txt");
         List<String> lignes = Files.readAllLines(P1);
@@ -48,6 +56,10 @@ public class GestionnaireBancaire {
     }
 
 
+    /**
+     * Sauvegarde les transactions dans un fichier
+     * @param nomFichier
+     */
     public void sauvegarderTransactions(String nomFichier) {
         try (ObjectOutputStream out = new ObjectOutputStream(
                 new FileOutputStream(new File(nomFichier)))) {
@@ -57,6 +69,10 @@ public class GestionnaireBancaire {
         }
     }
 
+    /**
+     * Charge les transactions depuis un fichier
+     * @param nomFichier
+     */
     public void chargerTransactions(String nomFichier) {
         try (ObjectInputStream in = new ObjectInputStream(
                 new FileInputStream(new File(nomFichier)))) {
