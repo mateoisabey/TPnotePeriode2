@@ -7,7 +7,7 @@ public class Taux {
     private double taux;
     private String nomTaux;
 
-    public Taux(double seuilInf, double seuilSup, double taux, String nomTaux) {
+    public Taux(String nomTaux, double seuilInf, double seuilSup, double taux) {
         this.seuilInf = seuilInf;
         this.seuilSup = seuilSup;
         this.taux = taux;

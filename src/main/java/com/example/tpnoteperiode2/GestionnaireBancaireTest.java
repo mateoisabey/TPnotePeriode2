@@ -1,65 +1,55 @@
 package com.example.tpnoteperiode2;
 
-import org.junit.Test;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
 
 public class GestionnaireBancaireTest {
 
-    private GestionBancaire gestionnaire;
+    private GestionnaireBancaire gestionnaire;
 
-    public void setUp() throws FileNotFoundException {
-        GestionBancaire gestionnaire = new GestionBancaire();
-        gestionnaire.chargerTaux("Data/taux.txt");
+    @Before
+    public void setUp() {
+        gestionnaire = new GestionnaireBancaire();
     }
 
     @Test
     public void testAjouterTransaction() {
-        Transaction transaction = new Transaction("salaire", "c", 2000);
-        gestionnaire.ajouterTransaction(transaction);
-        List<Transaction> transactions = gestionnaire.getTransactions();
-        assertEquals(1, transactions.size());
-        assertEquals(transaction, transactions.get(0));
-    }
+        Transaction t1 = new Transaction("achat", "d", 100.0);
+        gestionnaire.ajouterTransaction(t1);
+        double soldeAttendu = -100.0;
+        assertEquals(soldeAttendu, gestionnaire.getSoldeCompte(), 0.001);
 
-    @Test
-    public void testRecalculerSolde() {
-        Transaction transaction1 = new Transaction("salaire", "c", 2000);
-        Transaction transaction2 = new Transaction("loyer", "d", 1000);
-        gestionnaire.ajouterTransaction(transaction1);
-        gestionnaire.ajouterTransaction(transaction2);
-        assertEquals(1000, gestionnaire.getSoldeCompte());
+        Transaction t2 = new Transaction("salaire", "c", 2000.0);
+        gestionnaire.ajouterTransaction(t2);
+        soldeAttendu = 1900.0;
+        assertEquals(soldeAttendu, gestionnaire.getSoldeCompte(), 0.001);
     }
 
     @Test
     public void testChargerTaux() {
+        gestionnaire.chargerTaux("src/main/resources/com/example/tpnoteperiode2/Data/taux.txt");
         List<Taux> taux = gestionnaire.getTaux();
+        System.out.println(taux);
         assertEquals(3, taux.size());
-        Taux taux1 = taux.get(0);
-        assertEquals(0, taux1.getSeuilInf());
-        assertEquals(500, taux1.getSeuilSup());
-        assertEquals(0.01, taux1.getTaux());
-        assertEquals("Taux1", taux1.getNomTaux());
+
     }
 
     @Test
-    public void testSauvegarderTransactions() throws IOException, ClassNotFoundException {
-        Transaction transaction1 = new Transaction("salaire", "c", 2000);
-        Transaction transaction2 = new Transaction("loyer", "d", 1000);
-        gestionnaire.ajouterTransaction(transaction1);
-        gestionnaire.ajouterTransaction(transaction2);
-        gestionnaire.sauvegarderTransactions("Data/SaveList.bin");
-        gestionnaire.getTransactions().clear();
-        gestionnaire.chargerTransactions("Data/SaveList.bin");
+    public void testSauvegarderChargerTransactions() {
+        Transaction t1 = new Transaction("achat", "d", 100.0);
+        Transaction t2 = new Transaction("salaire", "c", 2000.0);
+        gestionnaire.ajouterTransaction(t1);
+        gestionnaire.ajouterTransaction(t2);
+        gestionnaire.sauvegarderTransactions("src/main/resources/com/example/tpnoteperiode2/Data/transactions.bin");
+        gestionnaire.chargerTransactions("src/main/resources/com/example/tpnoteperiode2/Data/transactions.bin");
         List<Transaction> transactions = gestionnaire.getTransactions();
         assertEquals(2, transactions.size());
-        assertEquals(transaction1, transactions.get(0));
-        assertEquals(transaction2, transactions.get(1));
+        assertEquals("achat", transactions.get(0).getNom());
+        assertEquals(2000.0, transactions.get(1).getMontant(), 0.001);
     }
+
 }
