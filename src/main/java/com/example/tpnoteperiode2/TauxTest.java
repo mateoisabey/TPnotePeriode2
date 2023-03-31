@@ -21,7 +21,7 @@ public class TauxTest {
     @Test
     public void testGetTaux() {
         Taux taux = new Taux("Taux1",0, 500, 0.01);
-        assertEquals(0.01, taux.getTaux(), 0.001);
+        assertEquals(0.01, taux.getValTaux(), 0.001);
     }
 
     @Test

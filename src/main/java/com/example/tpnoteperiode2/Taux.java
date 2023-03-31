@@ -4,13 +4,13 @@ public class Taux {
 
     private double seuilInf;
     private double seuilSup;
-    private double taux;
+    private double valTaux;
     private String nomTaux;
 
     public Taux(String nomTaux, double seuilInf, double seuilSup, double taux) {
         this.seuilInf = seuilInf;
         this.seuilSup = seuilSup;
-        this.taux = taux;
+        this.valTaux = taux;
         this.nomTaux = nomTaux;
     }
 
@@ -22,8 +22,8 @@ public class Taux {
         return seuilSup;
     }
 
-    public double getTaux() {
-        return taux;
+    public double getValTaux() {
+        return valTaux;
     }
 
     public String getNomTaux() {

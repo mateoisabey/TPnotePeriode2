@@ -2,6 +2,7 @@ package com.example.tpnoteperiode2;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.junit.Before;
@@ -30,11 +31,12 @@ public class GestionnaireBancaireTest {
     }
 
     @Test
-    public void testChargerTaux() {
-        gestionnaire.chargerTaux("src/main/resources/com/example/tpnoteperiode2/Data/taux.txt");
+    public void testChargerTaux() throws IOException {
+        gestionnaire.chargerTaux();
         List<Taux> taux = gestionnaire.getTaux();
         System.out.println(taux);
         assertEquals(3, taux.size());
+
 
     }
 

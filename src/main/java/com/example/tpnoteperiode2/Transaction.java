@@ -36,4 +36,9 @@ public class Transaction implements Serializable {
     public void setMontant(double montant) {
         this.montant = montant;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s (%s) - %.2f €", nom, type, montant);
+    }
 }

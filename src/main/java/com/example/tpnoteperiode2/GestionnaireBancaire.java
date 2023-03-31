@@ -1,7 +1,9 @@
 package com.example.tpnoteperiode2;
 
 import java.io.IOException;
-import java.util.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -20,9 +22,9 @@ public class GestionnaireBancaire {
 
     public void ajouterTransaction(Transaction transaction) {
         transactions.add(transaction);
-        if (transaction.getType().equals("c")) {
+        if (transaction.getType().equals("credit")) {
             solde += transaction.getMontant();
-        } else if (transaction.getType().equals("d")) {
+        } else if (transaction.getType().equals("debit")) {
             solde -= transaction.getMontant();
         }
     }
@@ -31,26 +33,20 @@ public class GestionnaireBancaire {
         return solde;
     }
 
-    public void chargerTaux(String nomFichier) {
-        File fichier = new File(nomFichier);
-        try (Scanner scanner = new Scanner(fichier)) {
-            while (scanner.hasNextLine()) {
-                String ligne = scanner.nextLine();
-
-                String[] valeurs = ligne.split(" ");
-                if (valeurs.length == 4) {
-                    double seuilInf = Double.parseDouble(valeurs[1].trim());
-                    double seuilSup = Double.parseDouble(valeurs[2].trim());
-                    double taux = Double.parseDouble(valeurs[3].trim());
-                    String nomTaux = valeurs[0].trim();
-                    Taux nouveauTaux = new Taux(nomTaux, seuilInf, seuilSup, taux);
-                    this.taux.add(nouveauTaux);
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("Erreur lors de la lecture du fichier de taux: " + e.getMessage());
+    public void chargerTaux() throws IOException {
+        Path P1 = Paths.get("src/main/resources/com/example/tpnoteperiode2/Data/taux.txt");
+        List<String> lignes = Files.readAllLines(P1);
+        for(String string : lignes){
+            String[] valeurs = string.split(" ");
+            double seuilInf = Double.parseDouble(valeurs[1].trim());
+            double seuilSup = Double.parseDouble(valeurs[2].trim());
+            double taux = Double.parseDouble(valeurs[3].trim());
+            String nomTaux = valeurs[0].trim();
+            Taux nouveauTaux = new Taux(nomTaux, seuilInf, seuilSup, taux);
+            this.taux.add(nouveauTaux);
         }
     }
+
 
     public void sauvegarderTransactions(String nomFichier) {
         try (ObjectOutputStream out = new ObjectOutputStream(
@@ -76,6 +72,10 @@ public class GestionnaireBancaire {
 
     public List<Taux> getTaux() {
         return taux;
+    }
+
+    public double getSolde() {
+        return solde;
     }
 }
 
